@@ -1,0 +1,27 @@
+﻿@model OwnerListViewModel
+
+@{
+    ViewData["Title"] = "Overview Car Owners";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+            <tr>
+                <td>First Name</td>
+                <td>Last Name</td>
+                <td>Cars</td>
+            </tr>
+            </thead>
+            @foreach (var owner in Model.Owners)
+            {
+                <tr>
+                    <td>@owner.FirstName</td>
+                    <td>@owner.LastName</td>
+                    <td>@owner.Cars</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

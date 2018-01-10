@@ -1,0 +1,31 @@
+﻿@model CarListViewModel
+
+@{
+    ViewData["Title"] = "Overzicht Auto's";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+            <tr>
+                <td>License Plate</td>
+                <td>Owner</td>
+                <td>Brand</td>
+                <td>Model</td>
+                <td>Color</td>
+            </tr>
+            </thead>
+            @foreach (var Car in Model.Cars)
+            {
+                <tr>
+                    <td>@Car.LicensePlate</td>
+                    <td>@Car.Owner</td>
+                    <td>@Car.Brand</td>
+                    <td>@Car.Model</td>
+                    <td>@Car.Color</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
