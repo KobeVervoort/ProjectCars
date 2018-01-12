@@ -1,0 +1,27 @@
+﻿@model VersionListViewModel
+
+@{
+    ViewData["Title"] = "Overview Car Types";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+            <tr>
+                <td>Brand</td>
+                <td>Model</td>
+                <td>On the road</td>
+            </tr>
+            </thead>
+            @foreach (var version in Model.Versions)
+            {
+                <tr>
+                    <td>@version.Brand</td>
+                    <td>@version.Model</td>
+                    <td>@version.Cars</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

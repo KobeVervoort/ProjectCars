@@ -23,6 +23,7 @@
   <ItemGroup>
     <Folder Include="Views\Car\" />
     <Folder Include="Views\Owner\" />
+    <Folder Include="Views\Version\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Views\Car\Template.cs" />
