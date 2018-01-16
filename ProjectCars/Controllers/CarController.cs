@@ -1,44 +1,111 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ProjectCars.Data;
 using ProjectCars.Entities;
 using ProjectCars.Models;
+using ProjectCars.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 
 namespace ProjectCars.Controllers
 {
     public class CarController : Controller
     {
-        private readonly CarsContext _carsContext;
+        private readonly ICarService _carService;
 
-        public CarController(CarsContext carsContext)
+        public CarController(ICarService carService)
         {
-            _carsContext = carsContext;
+            _carService = carService;
         }
 
         public IActionResult Index()
         {
             var model = new CarListViewModel() {Cars = new List<CarDetailViewModel>()};
-            model.Cars = new List<CarDetailViewModel>();
-            var allCars = _carsContext.Cars.Include(c => c.Owner)
-                                      .Include(c => c.Version)
-                                      .OrderBy(c => c.Id).ToList();
 
-            model.Cars.AddRange(allCars.Select(car => new CarDetailViewModel()
+            var allCars = _carService.GetAllCars();
+
+            model.Cars.AddRange(allCars.Select(ConvertCarToCarDetailViewModel).ToList());
+                                
+            return View(model);
+        }
+
+        protected CarDetailViewModel ConvertCarToCarDetailViewModel(Car car)
+        {
+            return new CarDetailViewModel()
             {
                 Id = car.Id,
+                DatePurchased = car.DatePurchased,
                 Color = car.Color,
                 LicensePlate = car.LicensePlate,
                 Owner = string.Join(' ', car.Owner?.FirstName, car.Owner?.LastName),
                 Model = car.Version?.Model,
                 Brand = car.Version?.Brand
-            }).ToList());
-                                
+            };
+        }
+
+        [HttpGet("/cars/{id}")]
+        public IActionResult Edit([FromRoute] int id)
+        {
+            var car = _carService.GetCarById(id);
+            if (car == null)
+            {
+                return NotFound();
+            }
+
+            var model = ConvertCarToCarEditViewModel(car);
+            model.Versions = _carService.GetAllVersions().Select(x => new SelectListItem
+            {
+                Text = x.BrandAndModel,
+                Value = x.Id.ToString()
+            }).ToList();
+
+            model.Owners = _carService.GetAllOwners().Select(x => new SelectListItem
+            {
+                Text = x.FullName,
+                Value = x.Id.ToString()
+            }).ToList();
+
             return View(model);
         }
+
+        public CarEditViewModel ConvertCarToCarEditViewModel(Car car)
+        {
+            var model = new CarEditViewModel
+            {
+                Id = car.Id,
+                Color = car.Color,
+                LicensePlate = car.LicensePlate,
+                Version = car.Version?.BrandAndModel,
+                VersionId = car.Version?.Id,
+                Owner = car.Owner?.FullName,
+                OwnerId = car.Owner?.Id
+            };
+            return model;
+        }
+
+        [HttpPost("/cars/id")]
+        public IActionResult Persist([FromForm] CarEditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var car = model.Id == 0 ? new Car() : _carService.GetCarById(model.Id);
+                car.Color = model.Color;
+                car.Version = model.VersionId.HasValue ? _carService.GetVersionById(model.VersionId.Value) : null;
+                car.Owner = model.OwnerId.HasValue ? _carService.GetOwnerById(model.OwnerId.Value) : null;
+                car.LicensePlate = model.LicensePlate;
+                _carService.Persist(car);
+
+                return Redirect("/");
+            }
+            return View("Index", model );
+        }
+
+        [HttpPost("/cars/delete/{id}")]
+        public IActionResult Delete([FromRoute] int id)
+        {
+            _carService.Delete(id);
+            return RedirectToAction(nameof(Index));
+        }
+
 
     }
 }
