@@ -24,11 +24,13 @@
     <Folder Include="Views\Car\" />
     <Folder Include="Views\Owner\" />
     <Folder Include="Views\Version\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Views\Car\Template.cs" />
     <Compile Remove="Views\Car\Index.cs" />
     <Compile Remove="Models\CarDetailModel.cs" />
     <Compile Remove="Models\OwnerDetailModel.cs" />
+    <Compile Remove="Controllers\CarEditViewModel.cs" />
   </ItemGroup>
 </Project>
