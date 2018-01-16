@@ -2,7 +2,14 @@
 using ProjectCars.Entities;
 namespace ProjectCars.Data
 {
-    public class CarsContext : DbContext
+    public interface ICarsContext
+    {
+        DbSet<Car> Cars { get; set; }
+        DbSet<Owner> Owners { get; set; }
+        DbSet<Version> Versions { get; set; }
+    }
+
+    public class CarsContext : DbContext, ICarsContext
     {
         public CarsContext(DbContextOptions options) : base(options)
         {

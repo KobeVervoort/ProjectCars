@@ -8,6 +8,7 @@ namespace ProjectCars.Entities
         public int Id { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
-        public ICollection<Car> Cars { get; set; }
+        public string FullName => $"{FirstName} {LastName}";
+        public IEnumerable<Car> Cars { get; set; }
     }
 }
