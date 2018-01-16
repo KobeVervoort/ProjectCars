@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ProjectCars.Services;
 
 namespace ProjectCars
 {
@@ -21,6 +22,7 @@ namespace ProjectCars
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<CarsContext>(options => options.UseSqlite(Configuration.GetConnectionString("Sqlite")));
+            services.AddScoped<ICarService, CarService>();
             services.AddMvc();
         }
 
