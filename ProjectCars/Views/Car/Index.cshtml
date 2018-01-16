@@ -10,6 +10,7 @@
             <thead>
             <tr>
                 <td>License Plate</td>
+                <td>Puchase Date</td>
                 <td>Owner</td>
                 <td>Brand</td>
                 <td>Model</td>
@@ -20,10 +21,12 @@
             {
                 <tr>
                     <td>@Car.LicensePlate</td>
+                    <td>@Car.DatePurchased.ToShortDateString()</td>
                     <td>@Car.Owner</td>
                     <td>@Car.Brand</td>
                     <td>@Car.Model</td>
                     <td>@Car.Color</td>
+                    <td><a href = '/Cars/@Car.Id'>edit</a></td>
                 </tr>
             }
         </table>
