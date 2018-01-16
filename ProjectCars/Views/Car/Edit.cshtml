@@ -21,6 +21,11 @@
                     <span asp-validation-for="Color" class="text-danger"></span>
                 </div>
                 <div class="form-group">
+                    <label asp-for="DatePurchased">Purchase Date:</label>
+                    <input type="date" asp-for="DatePurchased"/>
+                    <span asp-validation-for="DatePurchased" class="text-danger"></span>
+                </div>
+                <div class="form-group">
                     <label asp-for="VersionId">Version:</label>
                     <select asp-for="VersionId" asp-items="Model.Versions"></select>
                     <span asp-validation-for="VersionId" class="text-danger"></span>

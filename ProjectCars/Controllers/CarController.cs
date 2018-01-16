@@ -73,6 +73,7 @@ namespace ProjectCars.Controllers
             {
                 Id = car.Id,
                 Color = car.Color,
+                DatePurchased = car.DatePurchased,
                 LicensePlate = car.LicensePlate,
                 Version = car.Version?.BrandAndModel,
                 VersionId = car.Version?.Id,
@@ -89,6 +90,7 @@ namespace ProjectCars.Controllers
             {
                 var car = model.Id == 0 ? new Car() : _carService.GetCarById(model.Id);
                 car.Color = model.Color;
+                car.DatePurchased = model.DatePurchased;
                 car.Version = model.VersionId.HasValue ? _carService.GetVersionById(model.VersionId.Value) : null;
                 car.Owner = model.OwnerId.HasValue ? _carService.GetOwnerById(model.OwnerId.Value) : null;
                 car.LicensePlate = model.LicensePlate;
