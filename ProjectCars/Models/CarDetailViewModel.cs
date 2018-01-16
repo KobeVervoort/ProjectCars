@@ -1,4 +1,6 @@
 ﻿using System;
+using ProjectCars.Entities;
+
 namespace ProjectCars.Models
 {
     public class CarDetailViewModel
