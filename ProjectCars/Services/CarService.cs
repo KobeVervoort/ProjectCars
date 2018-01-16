@@ -45,6 +45,11 @@ namespace ProjectCars.Services
             return _carsContext.Owners.Find(id);
         }
 
+        public List<Car> GetAllCarsByOwner(int id)
+        {
+            return _carsContext.Cars.Where(c => c.OwnerId == id).Include(c => c.Version).ToList();
+        }
+
         public List<Version> GetAllVersions()
         {
             return _carsContext.Versions.ToList();

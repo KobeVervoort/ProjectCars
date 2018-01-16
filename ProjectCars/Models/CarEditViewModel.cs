@@ -2,6 +2,7 @@
 using ProjectCars.Entities;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProjectCars.Models
 {

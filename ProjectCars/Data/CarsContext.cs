@@ -20,11 +20,13 @@ namespace ProjectCars.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Car>().HasKey(c => c.Id);
             modelBuilder.Entity<Car>().HasOne(c => c.Owner).WithMany(o => o.Cars);
-            modelBuilder.Entity<Car>().HasOne(c => c.Version);
+            modelBuilder.Entity<Car>().HasOne(c => c.Version).WithMany(v => v.Cars);
 
             modelBuilder.Entity<Owner>().HasKey(o => o.Id);
+            modelBuilder.Entity<Owner>().HasMany(o => o.Cars).WithOne(c => c.Owner);
 
             modelBuilder.Entity<Version>().HasKey(v => v.Id);
+            modelBuilder.Entity<Version>().HasMany(v => v.Cars).WithOne(c => c.Version);
 
         }
 
