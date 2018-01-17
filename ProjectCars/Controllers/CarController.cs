@@ -19,12 +19,12 @@ namespace ProjectCars.Controllers
 
         public IActionResult Index()
         {
-            var model = new CarListViewModel() {Cars = new List<CarDetailViewModel>()};
+            var model = new CarListViewModel() { Cars = new List<CarDetailViewModel>() };
 
             var allCars = _carService.GetAllCars();
 
             model.Cars.AddRange(allCars.Select(ConvertCarToCarDetailViewModel).ToList());
-                                
+
             return View(model);
         }
 
@@ -98,8 +98,30 @@ namespace ProjectCars.Controllers
 
                 return Redirect("/");
             }
-            return View("Index", model );
+            return View("Index", model);
         }
+
+        [HttpGet("/cars/create")]
+        public IActionResult create()
+        {
+            var car = new Car();
+
+            var model = ConvertCarToCarEditViewModel(car);
+            model.Versions = _carService.GetAllVersions().Select(x => new SelectListItem
+            {
+                Text = x.BrandAndModel,
+                Value = x.Id.ToString()
+            }).ToList();
+
+            model.Owners = _carService.GetAllOwners().Select(x => new SelectListItem
+            {
+                Text = x.FullName,
+                Value = x.Id.ToString()
+            }).ToList();
+
+            return View(model);
+        }
+
 
         [HttpPost("/cars/delete/{id}")]
         public IActionResult Delete([FromRoute] int id)
