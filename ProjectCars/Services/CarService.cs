@@ -25,7 +25,7 @@ namespace ProjectCars.Services
 
         public List<Car> GetAllCars()
         {
-            return GetFullGraph().OrderBy(c => c.Id)
+            return GetFullGraph().OrderBy(c => c.DatePurchased)
                 .ToList();
         }
 
@@ -58,6 +58,11 @@ namespace ProjectCars.Services
         public Version GetVersionById(int id)
         {
             return _carsContext.Versions.Find(id);
+        }
+
+        public List<Car> GetAllCarsByVersion(int id)
+        {
+            return _carsContext.Cars.Where(c => c.VersionId == id).Include(c => c.Owner).ToList();
         }
 
         public void Persist(Car car)

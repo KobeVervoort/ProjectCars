@@ -12,6 +12,7 @@ namespace ProjectCars.Services
         List<Car> GetAllCarsByOwner(int id);
         List<Version> GetAllVersions();
         Version GetVersionById(int id);
+        List<Car> GetAllCarsByVersion(int id);
         void Persist(Car car);
         void Delete(int id);
     }

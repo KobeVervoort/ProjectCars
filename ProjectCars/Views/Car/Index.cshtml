@@ -4,31 +4,32 @@
     ViewData["Title"] = "Overzicht Auto's";
 }
 
-<div class="row">
-    <div class="col-md-12">
-        <table class="table">
-            <thead>
+<div class="panel panel-default" style="margin-top: 20px">
+    <div class="panel-heading" style="font-size: 1.3em">All currently registered cars</div>
+    <table class="table">
+        <thead>
+        <tr style="font-weight: bold">
+            <td style="padding-left: 17px">License Plate</td>
+            <td>Puchase Date</td>
+            <td>Owner</td>
+            <td>Brand</td>
+            <td>Model</td>
+            <td>Color</td>
+        </tr>
+        </thead>
+        @foreach (var Car in Model.Cars)
+        {
             <tr>
-                <td>License Plate</td>
-                <td>Puchase Date</td>
-                <td>Owner</td>
-                <td>Brand</td>
-                <td>Model</td>
-                <td>Color</td>
+                <td style="padding-left: 17px">@Car.LicensePlate</td>
+                <td>@Car.DatePurchased.ToString("dd/MM/yyyy")</td>
+                <td>@Car.Owner</td>
+                <td>@Car.Brand</td>
+                <td>@Car.Model</td>
+                <td>@Car.Color</td>
+                <td><a href = '/Cars/@Car.Id'>edit</a></td>
             </tr>
-            </thead>
-            @foreach (var Car in Model.Cars)
-            {
-                <tr>
-                    <td>@Car.LicensePlate</td>
-                    <td>@Car.DatePurchased.ToString("dd/MM/yyyy")</td>
-                    <td>@Car.Owner</td>
-                    <td>@Car.Brand</td>
-                    <td>@Car.Model</td>
-                    <td>@Car.Color</td>
-                    <td><a href = '/Cars/@Car.Id'>edit</a></td>
-                </tr>
-            }
-        </table>
-    </div>
+        }
+    </table>
 </div>
+
+<a href="/cars/create" class="btn btn-primary">New Car</a>

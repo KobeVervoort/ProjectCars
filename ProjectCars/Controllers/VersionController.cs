@@ -6,52 +6,41 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using ProjectCars.Services;
+using ProjectCars.Entities;
 
 namespace ProjectCars.Controllers
 {
     public class VersionController : Controller
     {
-        private readonly CarsContext _carsContext;
+        private readonly ICarService _carService;
 
-        public VersionController(CarsContext carsContext)
+        public VersionController(ICarService carService)
         {
-            _carsContext = carsContext;
+            _carService = carService;
         }
 
+        [HttpGet("/types")]
         public IActionResult Index()
         {
             var model = new VersionListViewModel() { Versions = new List<VersionDetailViewModel>() };
-            model.Versions = new List<VersionDetailViewModel>();
-            var allVersions = _carsContext.Versions.Include(v => v.Cars).ThenInclude(v => v.Owner).OrderBy(o => o.Id).ToList();
 
-            foreach (var version in allVersions)
-            {
-                var vm = new VersionDetailViewModel
-                {
-                    Id = version.Id,
-                    Brand = version.Brand,
-                    Model = version.Model,
-                    Cars = ""
-                };
+            var allVersions = _carService.GetAllVersions();
 
-                var i = 1;
-
-                foreach (var car in version.Cars)
-                {
-                    if (i == version.Cars.Count)
-                    {
-                        vm.Cars += $"{car.LicensePlate}: {car.Owner.FirstName} {car.Owner.LastName} ";
-                    }
-                    else
-                    {
-                        vm.Cars += $"{car.LicensePlate}: {car.Owner.FirstName} {car.Owner.LastName}, ";
-                    }
-                    i++;
-                }
-                model.Versions.Add(vm);
-            }
+            model.Versions.AddRange(allVersions.Select(ConvertVersionToVersionDetailViewModel).ToList());
 
             return View(model);
+        }
+
+        public VersionDetailViewModel ConvertVersionToVersionDetailViewModel(Version version)
+        {
+            return new VersionDetailViewModel()
+            {
+                Id = version.Id,
+                Brand = version.Brand,
+                Model = version.Model,
+                Cars = _carService.GetAllCarsByVersion(version.Id)
+            };
         }
 
     }
