@@ -74,6 +74,15 @@ namespace ProjectCars.Services
             _carsContext.SaveChanges();
         }
 
+        public void OwnerPersist(Owner owner)
+        {
+            if (owner.Id == 0)
+                _carsContext.Owners.Add(owner);
+            else
+                _carsContext.Owners.Update(owner);
+            _carsContext.SaveChanges();
+        }
+
         public void Delete(int id)
         {
             var toDelete = GetCarById(id);

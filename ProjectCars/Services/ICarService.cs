@@ -14,6 +14,7 @@ namespace ProjectCars.Services
         Version GetVersionById(int id);
         List<Car> GetAllCarsByVersion(int id);
         void Persist(Car car);
+        void OwnerPersist(Owner owner);        
         void Delete(int id);
     }
 }
