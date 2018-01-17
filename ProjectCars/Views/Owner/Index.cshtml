@@ -4,24 +4,34 @@
     ViewData["Title"] = "Overview Car Owners";
 }
 
-<div class="row">
-    <div class="col-md-12">
+<div class="panel panel-default" style="margin-top: 20px">
+    <div class="panel-heading" style="font-size: 1.3em;">
+        Car owners and their cars
+    </div>
         <table class="table">
-            <thead>
-            <tr>
-                <td>First Name</td>
-                <td>Last Name</td>
-                <td>Cars</td>
-            </tr>
-            </thead>
             @foreach (var owner in Model.Owners)
             {
                 <tr>
-                    <td>@owner.FirstName</td>
-                    <td>@owner.LastName</td>
-                    <td>@owner.Cars</td>
+                    <td style="padding-left: 17px; font-weight: bold">@owner.FirstName @owner.LastName</td>
+                    <td></td>
+                    <td></td>
                 </tr>
+
+                foreach (var car in owner.Cars)
+                {
+                    
+                    <tr>
+                        
+                        <td style="padding-left: 25px">@car.LicensePlate</td>
+                        <td>@car.Version.Brand - @car.Version.Model</td>
+                        <td style="text-align: right"><a href="/cars/@car.Id">edit car</a></td>
+                    </tr>
+
+                }
             }
         </table>
-    </div>
+</div>
+<div>
+    <a href="/owners/create" class="btn btn-primary">New Owner</a>
+    <a href="/cars/create" class="btn btn-info">New Car</a>
 </div>
