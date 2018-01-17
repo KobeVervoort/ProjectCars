@@ -4,39 +4,46 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="row">
-    <div class="col-md-12">
-        <div>
-            <form asp-controller="Car" asp-action="Persist" method="post">
+<div class="panel panel-default" style="margin-top: 20px">
+    <div style="font-size: 1.3em" class="panel-heading">
+        Edit car
+    </div>
+    <div style="padding-left: 16px; padding-bottom: 15px">
+        <form asp-controller="Car" asp-action="Persist" method="post">
+            <table>
                 <input type="hidden" asp-for="Id" />
                 
-                <div class="form-group">
-                    <label asp-for="LicensePlate">License plate:</label>
-                    <input type="text" asp-for="LicensePlate" placeholder="Car's license plate number."/>
-                    <span asp-validation-for="LicensePlate" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Color">Color:</label>
-                    <input type="text" asp-for="Color" placeholder="Color of the car."/>
-                    <span asp-validation-for="Color" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="DatePurchased">Purchase Date:</label>
-                    <input type="date" asp-for="DatePurchased"/>
-                    <span asp-validation-for="DatePurchased" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="VersionId">Version:</label>
-                    <select asp-for="VersionId" asp-items="Model.Versions"></select>
-                    <span asp-validation-for="VersionId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="OwnerId">Owner:</label>
-                    <select asp-for="OwnerId" asp-items="Model.Owners"></select>
-                    <span asp-validation-for="OwnerId" class="text-danger"></span>
-                </div>
-                <input type="submit" value="Save Changes"/>
-            </form>
-        </div>
+                <tr>
+                    <td><label asp-for="LicensePlate">License plate:</label></td>
+                    <td><input style="margin: 10px 30px; width: 150px" type="text" asp-for="LicensePlate" placeholder="Car's license plate number."/>
+                    <span asp-validation-for="LicensePlate" class="text-danger"></span></td>
+                </tr>
+                <tr>
+                    <td><label asp-for="Color">Color:</label></td>
+                    <td><input style="margin: 10px 30px; width: 150px" type="text" asp-for="Color" placeholder="Color of the car."/>
+                    <span asp-validation-for="Color" class="text-danger"></span></td>
+                </tr>
+                <tr>
+                    <td><label asp-for="DatePurchased">Purchase Date:</label></td>
+                    <td><input style="margin: 10px 30px; width: 150px" type="date" asp-for="DatePurchased"/>
+                    <span asp-validation-for="DatePurchased" class="text-danger"></span></td>
+                </tr>
+                <tr>
+                    <td><label asp-for="VersionId">Version:</label></td>
+                    <td><select style="margin: 10px 30px; width: 150px" asp-for="VersionId" asp-items="Model.Versions"></select>
+                    <span asp-validation-for="VersionId" class="text-danger"></span></td>
+                </tr>
+                <tr>
+                    <td><label asp-for="OwnerId">Owner:</label></td>
+                    <td><select style="margin: 10px 30px; width: 150px" asp-for="OwnerId" asp-items="Model.Owners">
+                        <option value="">No owner</option>
+                       </select>
+                    <span asp-validation-for="OwnerId" class="text-danger"></span></td>
+                </tr>
+                <tr>
+                    <td><input class="btn btn-primary" type="submit" value="Save Changes"/></td>
+                </tr>
+            </table>
+        </form>
     </div>
 </div>

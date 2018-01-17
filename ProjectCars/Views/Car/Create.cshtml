@@ -14,29 +14,29 @@
                     <input type="hidden" asp-for="Id" />
                     <td><label asp-for="LicensePlate">License plate:</label></td>
                     <td>
-                        <input style="margin: 10px 15px; width: 150px" type="text" asp-for="LicensePlate" placeholder="Car's license plate number."/>
+                        <input style="margin: 10px 30px; width: 150px" type="text" asp-for="LicensePlate" placeholder="Car's license plate number."/>
                         <span asp-validation-for="LicensePlate" class="text-danger"></span>
                     </td>
                 </tr>
 
                 <tr>
                     <td><label asp-for="Color">Color:</label></td>
-                    <td><input style="margin: 10px 15px; width: 150px" type="text" asp-for="Color" placeholder="Color of the car."/>
+                    <td><input style="margin: 10px 30px; width: 150px" type="text" asp-for="Color" placeholder="Color of the car."/>
                     <span asp-validation-for="Color" class="text-danger"></span></td>
                 </tr>
                 <tr>
                     <td><label asp-for="DatePurchased">Purchase Date:</label></td>
-                    <td><input style="margin: 10px 15px; width: 150px" type="date" asp-for="DatePurchased" value="DatePurchased"/>
+                    <td><input style="margin: 10px 30px; width: 150px" type="date" asp-for="DatePurchased" value="DatePurchased"/>
                     <span asp-validation-for="DatePurchased" class="text-danger"></span></td>
                 </tr>
                 <tr>
                     <td><label asp-for="VersionId">Version:</label></td>
-                    <td><select style="margin: 10px 15px; width: 150px" asp-for="VersionId" asp-items="Model.Versions"></select>
+                    <td><select style="margin: 10px 30px; width: 150px" asp-for="VersionId" asp-items="Model.Versions"></select>
                     <span asp-validation-for="VersionId" class="text-danger"></span></td>
                 </tr>
                 <tr>
                     <td><label asp-for="OwnerId">Owner:</label></td>
-                    <td><select style="margin: 10px 15px; width: 150px" asp-for="OwnerId" asp-items="Model.Owners">
+                    <td><select style="margin: 10px 30px; width: 150px" asp-for="OwnerId" asp-items="Model.Owners">
                         <option value="">No owner</option>
                     </select>
                     <span asp-validation-for="OwnerId" class="text-danger"></span></td>

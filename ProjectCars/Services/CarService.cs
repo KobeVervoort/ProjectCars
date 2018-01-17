@@ -83,6 +83,15 @@ namespace ProjectCars.Services
             _carsContext.SaveChanges();
         }
 
+        public void VersionPersist(Version version)
+        {
+            if (version.Id == 0)
+                _carsContext.Versions.Add(version);
+            else
+                _carsContext.Versions.Update(version);
+            _carsContext.SaveChanges();
+        }
+
         public void Delete(int id)
         {
             var toDelete = GetCarById(id);

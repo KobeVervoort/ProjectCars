@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ProjectCars.Data;
+using ProjectCars.Entities;
 using ProjectCars.Models;
+using ProjectCars.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
-using ProjectCars.Services;
-using ProjectCars.Entities;
 
 namespace ProjectCars.Controllers
 {
@@ -41,6 +38,43 @@ namespace ProjectCars.Controllers
                 Model = version.Model,
                 Cars = _carService.GetAllCarsByVersion(version.Id)
             };
+        }
+
+        [HttpGet("/types/create")]
+        public IActionResult Create()
+        {
+            var version = new Version();
+
+            var model = ConvertVersionToVersionEditViewModel(version);
+
+            return View(model);
+        }
+
+        public VersionEditViewModel ConvertVersionToVersionEditViewModel(Version version)
+        {
+            var vm = new VersionEditViewModel
+            {
+                Id = version.Id,
+                Brand = version.Brand,
+                Model = version.Model
+            };
+
+            return vm;
+        }
+
+        public IActionResult Persist([FromForm] VersionEditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var version = new Version();
+                version.Brand = model.Brand;
+                version.Model = model.Model;
+
+                _carService.VersionPersist(version);
+
+                return Redirect("/types");
+            }
+            return View("Index", model);
         }
 
     }
