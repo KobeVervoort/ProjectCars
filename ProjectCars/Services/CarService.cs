@@ -74,7 +74,7 @@ namespace ProjectCars.Services
             _carsContext.SaveChanges();
         }
 
-        void Delete(int id)
+        public void Delete(int id)
         {
             var toDelete = GetCarById(id);
             if (toDelete != null)
@@ -82,11 +82,6 @@ namespace ProjectCars.Services
                 _carsContext.Cars.Remove(toDelete);
                 _carsContext.SaveChanges();
             }
-        }
-
-        void ICarService.Delete(int id)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }
