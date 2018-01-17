@@ -122,14 +122,11 @@ namespace ProjectCars.Controllers
             return View(model);
         }
 
-
         [HttpPost("/cars/delete/{id}")]
         public IActionResult Delete([FromRoute] int id)
         {
             _carService.Delete(id);
             return RedirectToAction(nameof(Index));
         }
-
-
     }
 }

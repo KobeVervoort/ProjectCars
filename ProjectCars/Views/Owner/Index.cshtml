@@ -5,7 +5,7 @@
 }
 
 <div class="panel panel-default" style="margin-top: 20px">
-    <div class="panel-heading" style="font-size: 1.3em;">
+    <div class="panel-heading" style="font-size: 1.3em">
         Car owners and their cars
     </div>
         <table class="table">
@@ -13,6 +13,7 @@
             {
                 <tr>
                     <td style="padding-left: 17px; font-weight: bold">@owner.FirstName @owner.LastName</td>
+                    <td></td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -25,6 +26,10 @@
                         <td style="padding-left: 25px">@car.LicensePlate</td>
                         <td>@car.Version.Brand - @car.Version.Model</td>
                         <td style="text-align: right"><a href="/cars/@car.Id">edit car</a></td>
+                        <td style="width: 20px"><a style="color: red;" asp-controller="Car" asp-action="Delete" asp-route-id="@car.Id"
+                           onclick="$.post(this.href).success(window.location.href = '/'); return false; ">
+                            delete
+                        </a></td>
                     </tr>
 
                 }

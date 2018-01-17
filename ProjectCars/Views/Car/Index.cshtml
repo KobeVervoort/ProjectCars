@@ -17,16 +17,28 @@
             <td>Color</td>
         </tr>
         </thead>
-        @foreach (var Car in Model.Cars)
+        @foreach (var car in Model.Cars)
         {
             <tr>
-                <td style="padding-left: 17px">@Car.LicensePlate</td>
-                <td>@Car.DatePurchased.ToString("dd/MM/yyyy")</td>
-                <td>@Car.Owner</td>
-                <td>@Car.Brand</td>
-                <td>@Car.Model</td>
-                <td>@Car.Color</td>
-                <td><a href = '/Cars/@Car.Id'>edit</a></td>
+                <td style="padding-left: 17px">@car.LicensePlate</td>
+                <td>@car.DatePurchased.ToString("dd/MM/yyyy")</td>
+                @if(car.Owner != " ")
+                {
+                    <td>@car.Owner</td>
+                }
+                else
+                {
+                    <td>N/A</td>
+                }
+                
+                <td>@car.Brand</td>
+                <td>@car.Model</td>
+                <td>@car.Color</td>
+                <td><a href = '/cars/@car.Id'>edit</a></td>
+                <td><a style="color: red" asp-controller="Car" asp-action="Delete" asp-route-id="@car.Id"
+                           onclick="$.post(this.href).success(window.location.href = '/'); return false; ">
+                            delete
+                        </a></td>
             </tr>
         }
     </table>
