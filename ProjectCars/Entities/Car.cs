@@ -11,7 +11,7 @@ namespace ProjectCars.Entities
         public string Color { get; set; }
         public DateTime DatePurchased { get; set; }
         public string LicensePlate { get; set; }
-        public int OwnerId { get; set; }
+        public int? OwnerId { get; set; }
         public virtual Owner Owner { get; set; }
         public int VersionId { get; set; }
         public virtual Version Version { get; set; }
