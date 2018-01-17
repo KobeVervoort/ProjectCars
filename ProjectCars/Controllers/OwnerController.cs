@@ -6,52 +6,41 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using ProjectCars.Services;
+using ProjectCars.Entities;
 
 namespace ProjectCars.Controllers
 {
     public class OwnerController : Controller
     {
-        private readonly CarsContext _carsContext;
+        private readonly ICarService _carService;
 
-        public OwnerController(CarsContext carsContext)
+        public OwnerController(ICarService carService)
         {
-            _carsContext = carsContext;
+            _carService = carService;
         }
 
+        [HttpGet("/owners")]
         public IActionResult Index()
         {
             var model = new OwnerListViewModel() { Owners = new List<OwnerDetailViewModel>() };
-            model.Owners = new List<OwnerDetailViewModel>();
-            var allOwners = _carsContext.Owners.Include(o => o.Cars).ThenInclude(o => o.Version).OrderBy(o => o.Id).ToList();
 
-            foreach (var owner in allOwners)
-            {
-                var vm = new OwnerDetailViewModel
-                {
-                    Id = owner.Id,
-                    FirstName = owner.FirstName,
-                    LastName = owner.LastName,
-                    Cars = ""
-                };
+            var allOwners = _carService.GetAllOwners();
 
-                var i = 1;
-
-                foreach (var car in owner.Cars)
-                {
-                    if(i == owner.Cars.Count)
-                    {
-                        vm.Cars += $"{car.Version.Brand} {car.Version.Model} ";
-                    }
-                    else
-                    {
-                        vm.Cars += $"{car.Version.Brand} {car.Version.Model}, ";
-                    }
-                    i++;
-                }
-                model.Owners.Add(vm);
-            }
+            model.Owners.AddRange(allOwners.Select(ConvertOwnerToOwnerDetailViewModel).ToList());
 
             return View(model);
+        }
+
+        public OwnerDetailViewModel ConvertOwnerToOwnerDetailViewModel(Owner owner)
+        {
+            return new OwnerDetailViewModel()
+            {
+                Id = owner.Id,
+                FirstName = owner.FirstName,
+                LastName = owner.LastName,
+                Cars = _carService.GetAllCarsByOwner(owner.Id)
+            };
         }
 
     }
